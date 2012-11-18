@@ -4,92 +4,65 @@
 
 
 // Character definitions
-//                    a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p
-char aChar[16] =     {1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0};
-char bChar[16] =     {0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1};
-char cChar[16] =     {1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1};
-char dChar[16] =     {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1};
-char eChar[16] =     {1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1};
-char fChar[16] =     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0};
-char gChar[16] =     {1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1};
-char hChar[16] =     {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0};
-char iChar[16] =     {1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1};
-char jChar[16] =     {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1};
-char kChar[16] =     {0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0};
-char lChar[16] =     {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1};
-char mChar[16] =     {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0};
-char nChar[16] =     {0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0};
-char oChar[16] =     {1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1};
-char pChar[16] =     {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0};
-char qChar[16] =     {1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1};
-char rChar[16] =     {1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0};
-char sChar[16] =     {1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1};
-char tChar[16] =     {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0};
-char uChar[16] =     {0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1};
-char vChar[16] =     {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0};
-char wChar[16] =     {0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0};
-char xChar[16] =     {0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0};
-char yChar[16] =     {0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0};
-char zChar[16] =     {1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1};
-char zeroChar[16] =  {1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1};
-char oneChar[16] =   {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
-char twoChar[16] =   {1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1};
-char threeChar[16] = {1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1};
-char fourChar[16] =  {0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0};
-char fiveChar[16] =  {1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1};
-char sixChar[16] =   {1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1};
-char sevenChar[16] = {1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0};
-char eightChar[16] = {1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1};
-char nineChar[16] =  {1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1};
-//                    a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p
-char commaChar[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
-char dashChar[16] =  {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
-char uscorChar[16] = {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1};
-char oparnChar[16] = {0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-char cparnChar[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0};
-char hashChar[16] =  {0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1};
-char dolarChar[16] = {1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1};
-char prcntChar[16] = {0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0};
-char starChar[16] =  {0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0};
-char plusChar[16] =  {0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0};
-char questChar[16] = {1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0};
-char quoteChar[16] = {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0};
-char slashChar[16] = {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
-char equalChar[16] = {0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1};
+//                         abcdefghijklmnop
+uint16_t aChar =     0b1011100001011100;
+uint16_t bChar =     0b0001101101011101;
+uint16_t cChar =     0b1000001001010101;
+uint16_t dChar =     0b1010101111000001;
+uint16_t eChar =     0b1000001001011101;
+uint16_t fChar =     0b1000000001011100;
+uint16_t gChar =     0b1001101001010101;
+uint16_t hChar =     0b0011100000011100;
+uint16_t iChar =     0b1000001111000001;
+uint16_t jChar =     0b1000000111000101;
+uint16_t kChar =     0b0100010000011100;
+uint16_t lChar =     0b0000001000010101;
+uint16_t mChar =     0b0110100000110100;
+uint16_t nChar =     0b0010110000110100;
+uint16_t oChar =     0b1010101001010101;
+uint16_t pChar =     0b1011000001011100;
+uint16_t qChar =     0b1010111001010101;
+uint16_t rChar =     0b1011010001011100;
+uint16_t sChar =     0b1001101001100001;
+uint16_t tChar =     0b1000000111000000;
+uint16_t uChar =     0b0010101000010101;
+uint16_t vChar =     0b0100000000010110;
+uint16_t wChar =     0b0010110000010110;
+uint16_t xChar =     0b0100010000100010;
+uint16_t yChar =     0b0100000010100000;
+uint16_t zChar =     0b1100001001000011;
+uint16_t zeroChar =  0b1010101001010101;
+uint16_t oneChar =   0b0000000110000000;
+uint16_t twoChar =   0b1011001001001101;
+uint16_t threeChar = 0b1101101001000001;
+uint16_t fourChar =  0b0011100000011000;
+uint16_t fiveChar =  0b1001101001011001;
+uint16_t sixChar =   0b1001101001011101;
+uint16_t sevenChar = 0b1100000001000010;
+uint16_t eightChar = 0b1011101001011101;
+uint16_t nineChar =  0b1011101001011001;
+//                         abcdefghijklmnop
+uint16_t commaChar = 0b0000000000000010;
+uint16_t dashChar =  0b0001000000001000;
+uint16_t uscorChar = 0b0000001000000001;
+uint16_t oparnChar = 0b0100010000000000;
+uint16_t cparnChar = 0b0000000000100010;
+uint16_t hashChar =  0b0011101110001001;
+uint16_t dolarChar = 0b1001101111011001;
+uint16_t prcntChar = 0b0101101111011010;
+uint16_t starChar =  0b0101010000101010;
+uint16_t plusChar =  0b0001000110001000;
+uint16_t questChar = 0b1011000011010000;
+uint16_t quoteChar = 0b0000000100010000;
+uint16_t slashChar = 0b0100000000000010;
+uint16_t equalChar = 0b0001001000001001;
 
-	char topData[160] = {
-	//a,b,c, d, e, f, g, h, i, j, k, l, m, n, o, p
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D1
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D2
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D3
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D4
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D5
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D6
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D7
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D8
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D9
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};  // D10
+uint16_t topData[10]    = {0,0,0,0,0,0,0,0,0,0};
+uint16_t bottomData[10] = {0,0,0,0,0,0,0,0,0,0};
 	
-
-	
-	char bottomData[160] = {
-	//a,b,c, d, e, f, g, h, i, j, k, l, m, n, o, p
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D1
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D2
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D3
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D4
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D5
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D6
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D7
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D8
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D9
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};  // D10
-
-
-
 // Constructor
 ePaper::ePaper(int EIO, int XCK, int LATCH, int SLPB, int DI0, int EN, int VCC){
-	_EIO = EIO;
+	_EIO = EIO; //not used
   	_XCK = XCK;
   	_LATCH = LATCH;
   	_SLPB = SLPB;
@@ -122,8 +95,39 @@ ePaper::ePaper(int EIO, int XCK, int LATCH, int SLPB, int DI0, int EN, int VCC){
   
 }
 
+void ePaper::shiftBits(uint8_t nbits, uint16_t val)
+{
+	uint8_t i;
 
-void ePaper::flipData(char * characterData){
+	for (i = 0; i < nbits; i++)  {
+		// Little endian
+		//digitalWrite(_DI0, !!(val & (1 << i)));
+		// Big endian
+		digitalWrite(_DI0, !!(val & (1 << (nbits - 1 - i))));
+
+		digitalWrite(_XCK, HIGH);
+		digitalWrite(_XCK, LOW);		
+	}
+}
+
+
+uint16_t reverse(uint16_t x)
+{
+    x = (((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1));
+    x = (((x & 0xcccccccc) >> 2) | ((x & 0x33333333) << 2));
+    x = (((x & 0xf0f0f0f0) >> 4) | ((x & 0x0f0f0f0f) << 4));
+    //x = (((x & 0xff00ff00) >> 8) | ((x & 0x00ff00ff) << 8));
+    return ((x >> 8) | (x << 8));
+
+}
+
+void reverseData(uint16_t characterData[]) {
+  for (int i=0; i<10; i++) {
+    characterData[i] = reverse(characterData[i]);
+  }
+}
+
+void flipData(uint16_t characterData[]){
 /* void flipData(char * characterData)
   char * characterData is an array of 160 char*'s (10 characters, 16 segments each).
   Each variable in characterData should be either a 1 or a 0.
@@ -136,17 +140,17 @@ void ePaper::flipData(char * characterData){
 */
 
 
-  char tempData[160];
+  uint16_t tempData[10];
   
-  for (int i=0; i<160; i++)
+  for (int i=0; i<10; i++)
     tempData[i] = characterData[i];
     
-  for (int i=0; i<160; i++)
-    characterData[i] = tempData[159-i];
+  for (int i=0; i<10; i++)
+    characterData[i] = tempData[9-i];
 }
 
 
-void ePaper::print(char * displayTop, char * displayBottom, int bw, int com){
+void ePaper::print(uint16_t data[], int bw, int com){
   /* ePrint(char * displayTop, char * displayBottom, int bw, int com)
   This function displays the data in displayTop and displayBottom onto a 10x2
   ePaper display. The first and last bits of data transmission are configurable.
@@ -160,79 +164,22 @@ void ePaper::print(char * displayTop, char * displayBottom, int bw, int com){
 */
 
   
-  digitalWrite(_EIO, LOW);
-  if (bw)
-    digitalWrite(_DI0, HIGH);
-  else
-    digitalWrite(_DI0, LOW);
-  delayMicroseconds(1);
-  clock();     // Y0
-  digitalWrite(_EIO, HIGH);
+  shiftBits(1, bw);
 
-  for(int i = 0; i<160; i++)
+  for(int i=0; i<10; i++)
   {
-    if (!displayBottom[i])
-      digitalWrite(_DI0, LOW);
-    else
-      digitalWrite(_DI0, HIGH);
-    delayMicroseconds(1);
-    clock();
+    shiftBits(16, data[i]);
   }
-  if (com)
-    digitalWrite(_DI0, HIGH);
-  else
-    digitalWrite(_DI0, LOW);
-  clock();     // Y161
-  
-  //--- 2nd display ---
-  
-  if (bw)
-    digitalWrite(_DI0, HIGH);
-  else
-    digitalWrite(_DI0, LOW);
-  
-  clock();     // Y0
 
-  for(int i = 0; i<160; i++)
-  {
-    if (!displayTop[i])
-      digitalWrite(_DI0, LOW);
-    else
-      digitalWrite(_DI0, HIGH);
-    delayMicroseconds(1);
-    clock();
-  }
-  if (com)
-    digitalWrite(_DI0, HIGH);
-  else
-    digitalWrite(_DI0, LOW);
-  delayMicroseconds(1);
-  clock();     // Y161  
-  
-  latch();
+  shiftBits(1, com);
 }
-
-
-
-// clock(): Simple function to advance the XCK line one period
-void ePaper::clock()
-{
-  digitalWrite(_XCK, HIGH);
-  delayMicroseconds(1);
-  digitalWrite(_XCK, LOW);
-  delayMicroseconds(1);
-}
-
-
 
 
 // latch(): Simple function to activate and deactivate the latch
 void ePaper::latch()
 {
   digitalWrite(_LATCH, HIGH);
-  delayMicroseconds(5);
   digitalWrite(_LATCH, LOW);
-  delayMicroseconds(5);
 }
 
 
@@ -270,11 +217,11 @@ void ePaper::writeBottom(char * characterData){
 
 void ePaper::writeDisplay(){
 
-  flipData(topData);  // If data is not flipped, it will look upside down.
+  flipData(bottomData);  // If data is not flipped, it will look upside down.
+  reverseData(topData);
 
 
   digitalWrite(_DI0, HIGH);
-  digitalWrite(_EIO, HIGH);
   digitalWrite(_VCC, HIGH);
   delay(50);
   
@@ -286,16 +233,19 @@ void ePaper::writeDisplay(){
 
   int x;
   for(x=0; x<15; x++) {
-	  print(topData, bottomData, 0, 0);
+	  print(bottomData, 0, 0);
+	  print(topData,    0, 0);
+	  latch();
 	  delay(100);
-	  print(topData, bottomData, 0, 1);
+	  print(bottomData, 0, 1);
+	  print(topData,    0, 1);
+	  latch();
 	  delay(100);
   }
 
   digitalWrite(_SLPB, LOW);
   digitalWrite(_DI0, LOW);
   digitalWrite(_XCK, LOW);
-  digitalWrite(_EIO, LOW);
   digitalWrite(_LATCH, LOW);
   digitalWrite(_EN, LOW);
 
@@ -305,7 +255,7 @@ void ePaper::writeDisplay(){
 }
 
 
-void ePaper::createData(char * characterData, char * toDisplay){
+void ePaper::createData(uint16_t characterData[], char * toDisplay){
 /* void createData(char * characterData, char * toDisplay)
   This function turns ASCII characters into data that is readable by the display.
   
@@ -324,237 +274,186 @@ void ePaper::createData(char * characterData, char * toDisplay){
     {
       case 'A':
       case 'a':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = aChar[j];
+        characterData[i] = aChar;
         break;
       case 'B':
       case 'b':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = bChar[j];
+        characterData[i] = bChar;
         break;
       case 'C':
       case 'c':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = cChar[j];
+        characterData[i] = cChar;
         break;
       case 'D':
       case 'd':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = dChar[j];
+        characterData[i] = dChar;
         break;
       case 'E':
       case 'e':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = eChar[j];
+        characterData[i] = eChar;
         break;
       case 'F':
       case 'f':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = fChar[j];
+        characterData[i] = fChar;
         break;
       case 'G':
       case 'g':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = gChar[j];
+        characterData[i] = gChar;
         break;
       case 'H':
       case 'h':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = hChar[j];
+        characterData[i] = hChar;
         break;
       case 'I':
       case 'i':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = iChar[j];
+        characterData[i] = iChar;
         break;
       case 'J':
       case 'j':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = jChar[j];
+        characterData[i] = jChar;
         break;
       case 'K':
       case 'k':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = kChar[j];
+        characterData[i] = kChar;
         break;
       case 'L':
       case 'l':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = lChar[j];
+        characterData[i] = lChar;
         break;
       case 'M':
       case 'm':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = mChar[j];
+        characterData[i] = mChar;
         break;
       case 'N':
       case 'n':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = nChar[j];
+        characterData[i] = nChar;
         break;
       case 'O':
       case 'o':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = oChar[j];
+        characterData[i] = oChar;
         break;
       case 'P':
       case 'p':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = pChar[j];
+        characterData[i] = pChar;
         break;
       case 'Q':
       case 'q':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = qChar[j];
+        characterData[i] = qChar;
         break;
       case 'R':
       case 'r':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = rChar[j];
+        characterData[i] = rChar;
         break;
       case 'S':
       case 's':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = sChar[j];
+        characterData[i] = sChar;
         break;
       case 'T':
       case 't':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = tChar[j];
+        characterData[i] = tChar;
         break;
       case 'U':
       case 'u':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = uChar[j];
+        characterData[i] = uChar;
         break;
       case 'V':
       case 'v':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = vChar[j];
+        characterData[i] = vChar;
         break;
       case 'W':
       case 'w':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = wChar[j];
+        characterData[i] = wChar;
         break;
       case 'X':
       case 'x':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = xChar[j];
+        characterData[i] = xChar;
         break;
       case 'Y':
       case 'y':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = yChar[j];
+        characterData[i] = yChar;
         break;
       case 'Z':
       case 'z':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = zChar[j];
+        characterData[i] = zChar;
         break;
       case '0':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = zeroChar[j];
+        characterData[i] = zeroChar;
         break;
       case '1':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = oneChar[j];
+        characterData[i] = oneChar;
         break;
       case '2':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = twoChar[j];
+        characterData[i] = twoChar;
         break;
       case '3':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = threeChar[j];
+        characterData[i] = threeChar;
         break;
       case '4':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = fourChar[j];
+        characterData[i] = fourChar;
         break;
       case '5':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = fiveChar[j];
+        characterData[i] = fiveChar;
         break;
       case '6':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = sixChar[j];
+        characterData[i] = sixChar;
         break;
       case '7':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = sevenChar[j];
+        characterData[i] = sevenChar;
         break;
       case '8':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = eightChar[j];
+        characterData[i] = eightChar;
         break;
       case '9':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = nineChar[j];
+        characterData[i] = nineChar;
         break;
       case ',':
       case '.':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = commaChar[j];
+        characterData[i] = commaChar;
         break;
       case '-':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = dashChar[j];
+        characterData[i] = dashChar;
         break;
       case '_':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = uscorChar[j];
+        characterData[i] = uscorChar;
         break;
       case '(':
       case '<':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = oparnChar[j];
+        characterData[i] = oparnChar;
         break;
       case ')':
       case '>':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = cparnChar[j];
+        characterData[i] = cparnChar;
         break;
       case '#':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = hashChar[j];
+        characterData[i] = hashChar;
         break;
       case '$':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = dolarChar[j];
+        characterData[i] = dolarChar;
         break;
       case '%':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = prcntChar[j];
+        characterData[i] = prcntChar;
         break;
       case '*':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = starChar[j];
+        characterData[i] = starChar;
         break;
       case '+':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = plusChar[j];
+        characterData[i] = plusChar;
         break;
       case '?':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = questChar[j];
+        characterData[i] = questChar;
         break;
       case '"':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = quoteChar[j];
+        characterData[i] = quoteChar;
         break;
       case '/':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = slashChar[j];
+        characterData[i] = slashChar;
         break;
       case '=':
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = equalChar[j];
+        characterData[i] = equalChar;
         break;
       default:
-        for (int j=0; j<16; j++)
-          characterData[(9-i)*16 + j] = 0;
-          break;
+          characterData[i] = 0;
+        break;
     }
   }
 }

@@ -24,15 +24,13 @@ class ePaper
 
 
   private:
-  	void clock();
   	void latch();
-  	void print(char * displayTop, char * displayBottom, int bw, int com);
-   	void flipData(char * characterData);
-  	void createData(char * characterData, char * toDisplay);
+  	void print(uint16_t data[], int bw, int com);
+  	void createData(uint16_t characterData[], char * text);
+	void shiftBits(uint8_t count, uint16_t val);
 
-  	char topData[160];
-	char bottomData[160];
-	char bottomInput[10];
+  	uint16_t topData[10];
+	uint16_t bottomData[10];
   
   	int _EIO;
   	int _XCK;
