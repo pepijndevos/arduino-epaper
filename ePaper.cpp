@@ -121,32 +121,34 @@ uint16_t reverse(uint16_t x)
 
 }
 
-void reverseData(uint16_t characterData[]) {
+uint16_t* reverseData(uint16_t characterData[]) {
+  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
+
   for (int i=0; i<10; i++) {
-    characterData[i] = reverse(characterData[i]);
+    newData[i] = reverse(characterData[i]);
   }
+
+  return newData;
 }
 
-void flipData(uint16_t characterData[]){
-/* void flipData(char * characterData)
-  char * characterData is an array of 160 char*'s (10 characters, 16 segments each).
-  Each variable in characterData should be either a 1 or a 0.
-  
-  There is no return value, however the array sent to this function will be modified
-  such that the order of the array is reversed (last byte becomes first, etc.).
-  
-  This function is useful if you want to flip a display. It's necessary if you want both
-  displays to face the same direction.
-*/
+uint16_t* invertData(uint16_t characterData[]) {
+  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
 
+  for (int i=0; i<10; i++) {
+    newData[i] = ~characterData[i];
+  }
 
-  uint16_t tempData[10];
+  return newData;
+}
+
+uint16_t* flipData(uint16_t characterData[]){
+  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
   
   for (int i=0; i<10; i++)
-    tempData[i] = characterData[i];
+    newData[9-i] = characterData[i];
+
+  return newData;
     
-  for (int i=0; i<10; i++)
-    characterData[i] = tempData[9-i];
 }
 
 
@@ -174,6 +176,11 @@ void ePaper::print(uint16_t data[], int bw, int com){
   shiftBits(1, com);
 }
 
+void ePaper::printAll(uint16_t topData[], uint16_t bottomData[], int bw, int com) {
+  print(bottomData, bw, com);
+  print(topData,    bw, com);
+  latch();
+}
 
 // latch(): Simple function to activate and deactivate the latch
 void ePaper::latch()
@@ -215,11 +222,24 @@ void ePaper::writeBottom(char * characterData){
 	createData(bottomData, buffer);
 }
 
-void ePaper::writeDisplay(){
+void ePaper::writeDisplay(int bw){
+  
+  uint16_t *bottom;
+  uint16_t *top;
+  uint16_t *inverseBottom;
+  uint16_t *inverseTop;
 
-  flipData(bottomData);  // If data is not flipped, it will look upside down.
-  reverseData(topData);
-
+  if(!bw) {
+    bottom = flipData(bottomData);
+    top    = reverseData(topData);
+    inverseBottom = invertData(bottom);
+    inverseTop    = invertData(top);
+  } else {
+    inverseBottom = flipData(bottomData);
+    inverseTop    = reverseData(topData);
+    bottom = invertData(inverseBottom);
+    top    = invertData(inverseTop);
+  }
 
   digitalWrite(_DI0, HIGH);
   digitalWrite(_VCC, HIGH);
@@ -231,17 +251,44 @@ void ePaper::writeDisplay(){
   delay(100);
   latch();
 
+
+  printAll(top, bottom, bw, 1);
+  delay(250);
+  printAll(top, bottom, bw, 0);
+  delay(250);
+
   int x;
-  for(x=0; x<15; x++) {
-	  print(bottomData, 0, 0);
-	  print(topData,    0, 0);
-	  latch();
-	  delay(100);
-	  print(bottomData, 0, 1);
-	  print(topData,    0, 1);
-	  latch();
-	  delay(100);
+  for(x=0; x<7; x++) {
+    delay(100);
+    printAll(top, bottom, bw, 0);
+    delay(100);
+    printAll(top, bottom, bw, 1);
+
   }
+
+  for(x=0; x<5; x++) {
+    delay(200);
+    printAll(inverseTop, inverseBottom, !bw, 0);
+    delay(200);
+    printAll(top, bottom, bw, 1);
+  }
+
+  printAll(inverseTop, inverseBottom, !bw, 0);
+  delay(250);
+  printAll(inverseTop, inverseBottom, !bw, 1);
+  delay(250);
+
+  for(x=0; x<7; x++) {
+    delay(100);
+    printAll(inverseTop, inverseBottom, !bw, 0);
+    delay(100);
+    printAll(inverseTop, inverseBottom, !bw, 1);
+  }
+
+  free(top);
+  free(bottom);
+  free(inverseTop);
+  free(inverseBottom);
 
   digitalWrite(_SLPB, LOW);
   digitalWrite(_DI0, LOW);

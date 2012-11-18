@@ -13,7 +13,7 @@ class ePaper
     
      ePaper(int EIO1pin, int XCKpin, int LATCHpin, int SLEEPBpin, int DI0pin, int ENpin, int VCCpin);
    	
-  	void writeDisplay();
+  	void writeDisplay(int bw);
   	void writeBottom(char * characterData);
   	void writeTop(char * characterData);
   	void writeNumberBottom(long input);
@@ -26,6 +26,7 @@ class ePaper
   private:
   	void latch();
   	void print(uint16_t data[], int bw, int com);
+	void printAll(uint16_t* top, uint16_t* bottom, int bw, int com);
   	void createData(uint16_t characterData[], char * text);
 	void shiftBits(uint8_t count, uint16_t val);
 
