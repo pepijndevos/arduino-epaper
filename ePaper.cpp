@@ -57,21 +57,89 @@ uint16_t quoteChar = 0b0000000100010000;
 uint16_t slashChar = 0b0100000000000010;
 uint16_t equalChar = 0b0001001000001001;
 
-uint16_t topData[10]    = {0,0,0,0,0,0,0,0,0,0};
-uint16_t bottomData[10] = {0,0,0,0,0,0,0,0,0,0};
+uint16_t reverse(uint16_t x) {
+// reverse all bits in two bytes
+
+    x = (((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1));
+    x = (((x & 0xcccccccc) >> 2) | ((x & 0x33333333) << 2));
+    x = (((x & 0xf0f0f0f0) >> 4) | ((x & 0x0f0f0f0f) << 4));
+    //x = (((x & 0xff00ff00) >> 8) | ((x & 0x00ff00ff) << 8));
+    return ((x >> 8) | (x << 8));
+
+}
+
+uint16_t* reverseData(uint16_t characterData[]) {
+// reverse all elements, causing it to be upside down
+
+  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
+
+  for (int i=0; i<10; i++) {
+    newData[i] = reverse(characterData[i]);
+  }
+
+  return newData;
+}
+
+uint16_t* flipData(uint16_t characterData[]) {
+// cause text to flow in the other direction
+
+  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
+  
+  for (int i=0; i<10; i++)
+    newData[9-i] = characterData[i];
+
+  return newData;
+    
+}
+
+Changes* newData(uint16_t newData[]) {
+// generate a Changes structure where all input bits are added,
+// all others removed, and the negative is precalculated too.
+
+  Changes *ch = malloc(sizeof(Changes));
+
+  for(int i=0; i<10; i++) {
+    ch->add[i] = newData[i];
+    ch->del[i] = ~(newData[i]);
+    ch->addNeg[i] = ~(newData[i]);
+    ch->delNeg[i] = newData[i];
+  }
+
+  return ch;
+}
+
+Changes* changedData(uint16_t oldData[], uint16_t newData[]) {
+// Generate a Canges structure with all the bits
+// that are in new but not in old,
+// all the bits that are in old but now in new,
+// and the negative of both
+
+  Changes *ch = malloc(sizeof(Changes));
+
+  for(int i=0; i<10; i++) {
+    ch->add[i] = (oldData[i] ^ newData[i]) & newData[i];
+    ch->del[i] = (oldData[i] ^ newData[i]) & ~(newData[i]);
+    ch->addNeg[i] = ~(ch->add[i]);
+    ch->delNeg[i] = ~(ch->del[i]);
+  }
+
+  return ch;
+}
+
+
 	
 // Constructor
-ePaper::ePaper(int EIO, int XCK, int LATCH, int SLPB, int DI0, int EN, int VCC){
-	_EIO = EIO; //not used
-  	_XCK = XCK;
-  	_LATCH = LATCH;
-  	_SLPB = SLPB;
-  	_DI0 = DI0;
-	_EN = EN;
-	_VCC = VCC;
+ePaper::ePaper(int XCK, int LATCH, int SLPB, int DI0, int EN, int VCC){
+  _XCK = XCK;
+  _LATCH = LATCH;
+  _SLPB = SLPB;
+  _DI0 = DI0;
+  _EN = EN;
+  _VCC = VCC;
+  
+  _topData = {0,0,0,0,0,0,0,0,0,0};
+  _bottomData = {0,0,0,0,0,0,0,0,0,0};
 	
-	
-  pinMode(_EIO, OUTPUT);
   pinMode(_XCK, OUTPUT);
   pinMode(_LATCH, OUTPUT);
   pinMode(_SLPB, OUTPUT);
@@ -82,9 +150,8 @@ ePaper::ePaper(int EIO, int XCK, int LATCH, int SLPB, int DI0, int EN, int VCC){
   
   // Initial Pin Configurations -----------------------
   digitalWrite(_SLPB, LOW);      // Sleep high turns the display on
-  digitalWrite(_DI0, LOW);         // Initialize data high
+  digitalWrite(_DI0, LOW);
   digitalWrite(_XCK, LOW);
-  digitalWrite(_EIO, LOW);
   digitalWrite(_LATCH, LOW);
   digitalWrite(_EN, LOW);
   digitalWrite(_VCC, LOW);
@@ -95,8 +162,9 @@ ePaper::ePaper(int EIO, int XCK, int LATCH, int SLPB, int DI0, int EN, int VCC){
   
 }
 
-void ePaper::shiftBits(uint8_t nbits, uint16_t val)
-{
+void ePaper::shiftBits(uint8_t nbits, uint16_t val) {
+// write N bits in val to the data and clock lines
+
 	uint8_t i;
 
 	for (i = 0; i < nbits; i++)  {
@@ -110,66 +178,14 @@ void ePaper::shiftBits(uint8_t nbits, uint16_t val)
 	}
 }
 
-
-uint16_t reverse(uint16_t x)
-{
-    x = (((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1));
-    x = (((x & 0xcccccccc) >> 2) | ((x & 0x33333333) << 2));
-    x = (((x & 0xf0f0f0f0) >> 4) | ((x & 0x0f0f0f0f) << 4));
-    //x = (((x & 0xff00ff00) >> 8) | ((x & 0x00ff00ff) << 8));
-    return ((x >> 8) | (x << 8));
-
-}
-
-uint16_t* reverseData(uint16_t characterData[]) {
-  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
-
-  for (int i=0; i<10; i++) {
-    newData[i] = reverse(characterData[i]);
-  }
-
-  return newData;
-}
-
-uint16_t* invertData(uint16_t characterData[]) {
-  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
-
-  for (int i=0; i<10; i++) {
-    newData[i] = ~characterData[i];
-  }
-
-  return newData;
-}
-
-uint16_t* flipData(uint16_t characterData[]){
-  uint16_t *newData = (uint16_t*)malloc(10*sizeof(uint16_t));
-  
-  for (int i=0; i<10; i++)
-    newData[9-i] = characterData[i];
-
-  return newData;
-    
-}
-
-
 void ePaper::print(uint16_t data[], int bw, int com){
-  /* ePrint(char * displayTop, char * displayBottom, int bw, int com)
-  This function displays the data in displayTop and displayBottom onto a 10x2
-  ePaper display. The first and last bits of data transmission are configurable.
-  There is no return value.
-  
-  char * displayTop - This should be an array of 160 1's or 0's. A 1 will turn
-    a segment on, a 0 will turn a segment off. Each character consists of 16 segments.
-  char * displayBottom - Same as display top.
-  int bw - This should be a 1 or a 0, and will decide whether the BW (the fist bit) bit is set or not.
-  int com - This should be a 1 or a 0, and will decide whether the COM (the last bit) bit is set or not.
-*/
-
+// uint16 data[] - 10*16=160 bits of segment data 
+// int bw - This should be a 1 or a 0, and will decide whether the BW (the fist bit) bit is set or not.
+// int com - This should be a 1 or a 0, and will decide whether the COM (the last bit) bit is set or not.
   
   shiftBits(1, bw);
 
-  for(int i=0; i<10; i++)
-  {
+  for(int i=0; i<10; i++) {
     shiftBits(16, data[i]);
   }
 
@@ -177,71 +193,20 @@ void ePaper::print(uint16_t data[], int bw, int com){
 }
 
 void ePaper::printAll(uint16_t topData[], uint16_t bottomData[], int bw, int com) {
+// print both displays and throw the latch
   print(bottomData, bw, com);
   print(topData,    bw, com);
   latch();
 }
 
+void ePaper::latch() {
 // latch(): Simple function to activate and deactivate the latch
-void ePaper::latch()
-{
   digitalWrite(_LATCH, HIGH);
   digitalWrite(_LATCH, LOW);
 }
 
-
-void ePaper::writeNumberTop(long input){
-
-	char buffer [11];
-	snprintf(buffer, 11, "%ld          ", input);
-	
-	createData(topData, buffer);
-}
-
-
-void ePaper::writeNumberBottom(long input){
-
-	char buffer [11];
-	snprintf(buffer, 11, "%ld          ", input);
-	
-	createData(bottomData, buffer);
-}
-
-
-
-void ePaper::writeTop(char * characterData){
-	char buffer [11];
-	snprintf(buffer, 11, "%s          ", characterData);
-	createData(topData, buffer);
-}
-
-
-void ePaper::writeBottom(char * characterData){
-	char buffer [11];
-	snprintf(buffer, 11, "%s          ", characterData);
-	createData(bottomData, buffer);
-}
-
-void ePaper::writeDisplay(int bw){
-  
-  uint16_t *bottom;
-  uint16_t *top;
-  uint16_t *inverseBottom;
-  uint16_t *inverseTop;
-
-  if(!bw) {
-    bottom = flipData(bottomData);
-    top    = reverseData(topData);
-    inverseBottom = invertData(bottom);
-    inverseTop    = invertData(top);
-  } else {
-    inverseBottom = flipData(bottomData);
-    inverseTop    = reverseData(topData);
-    bottom = invertData(inverseBottom);
-    top    = invertData(inverseTop);
-  }
-
-  digitalWrite(_DI0, HIGH);
+void ePaper::wakeup() {
+// power the chip and display and wake it from sleep
   digitalWrite(_VCC, HIGH);
   delay(50);
   
@@ -249,9 +214,56 @@ void ePaper::writeDisplay(int bw){
   digitalWrite(_SLPB, HIGH);
 
   delay(100);
-  latch();
+  latch(); // do we need this?
+}
 
+void ePaper::shutdown() {
+// put all pins to LOW
+  digitalWrite(_SLPB, LOW);
+  digitalWrite(_DI0, LOW);
+  digitalWrite(_XCK, LOW);
+  digitalWrite(_LATCH, LOW);
+  digitalWrite(_EN, LOW);
 
+  delay(50);
+  digitalWrite(_VCC, LOW);
+}
+
+void ePaper::completeData(char *top, char *bottom) {
+// write a full display update to memory, updates all segments
+  for (int i=0; i<10; i++) {
+    _topData[i] = toBits(top[i]);
+    _bottomData[i] = toBits(bottom[i]);
+  }
+  _topChanges = newData(_topData);
+  _bottomChanges = newData(_bottomData);
+}
+
+void ePaper::incermentalData(char *top, char *bottom) {
+// write an incrementl display update to memory, updates only changed segments
+  uint16_t topData[10];
+  uint16_t bottomData[10];
+
+  for (int i=0; i<10; i++) {
+    topData[i] = toBits(top[i]);
+    bottomData[i] = toBits(bottom[i]);
+  }
+  _topChanges = newData(_topData, topData);
+  _bottomChanges = newData(_bottomData, bottomData);
+
+  for (int i=0; i<10; i++) {
+    _topData[i] = topData[i];
+    _bottomData[i] = bottomData[i];
+  }
+}
+
+void ePaper::writeSimple(int bw);
+// a simple update that fades sooner than the 7-5-7 but looks better
+
+void ePaper::write757(int bw) {
+// write a 7-5-7 waveform to the display
+// this is ugly and takes longer, but doesn't fade away as quickly
+  
   printAll(top, bottom, bw, 1);
   delay(250);
   printAll(top, bottom, bw, 0);
@@ -285,222 +297,144 @@ void ePaper::writeDisplay(int bw){
     printAll(inverseTop, inverseBottom, !bw, 1);
   }
 
-  free(top);
-  free(bottom);
-  free(inverseTop);
-  free(inverseBottom);
-
-  digitalWrite(_SLPB, LOW);
-  digitalWrite(_DI0, LOW);
-  digitalWrite(_XCK, LOW);
-  digitalWrite(_LATCH, LOW);
-  digitalWrite(_EN, LOW);
-
-  delay(50);
-  digitalWrite(_VCC, LOW);
-
 }
 
 
-void ePaper::createData(uint16_t characterData[], char * toDisplay){
-/* void createData(char * characterData, char * toDisplay)
-  This function turns ASCII characters into data that is readable by the display.
-  
-  There are no return values. The data on char * toDisplay is transformed into
-  the corresponding 1's and 0's for the display to understand, and char * characterData
-  is updated to reflect that data. toDisplay will not be affected by this functione.
-  
-  If you want to add more displayable characters to this code, you'll need to add another
-  case statment to the large switch. You should be able to pattern the statment after the
-  other cases.
-*/
+uint16_t toBits(char ch) {
+// turn a character into 16 bits of segment data
 
-  for (int i=0; i<10; i++)
-  {
-    switch (toDisplay[i])
+    switch (ch)
     {
       case 'A':
       case 'a':
-        characterData[i] = aChar;
-        break;
+        return aChar;
       case 'B':
       case 'b':
-        characterData[i] = bChar;
-        break;
+        return bChar;
       case 'C':
       case 'c':
-        characterData[i] = cChar;
-        break;
+        return cChar;
       case 'D':
       case 'd':
-        characterData[i] = dChar;
-        break;
+        return dChar;
       case 'E':
       case 'e':
-        characterData[i] = eChar;
-        break;
+        return eChar;
       case 'F':
       case 'f':
-        characterData[i] = fChar;
-        break;
+        return fChar;
       case 'G':
       case 'g':
-        characterData[i] = gChar;
-        break;
+        return gChar;
       case 'H':
       case 'h':
-        characterData[i] = hChar;
-        break;
+        return hChar;
       case 'I':
       case 'i':
-        characterData[i] = iChar;
-        break;
+        return iChar;
       case 'J':
       case 'j':
-        characterData[i] = jChar;
-        break;
+        return jChar;
       case 'K':
       case 'k':
-        characterData[i] = kChar;
-        break;
+        return kChar;
       case 'L':
       case 'l':
-        characterData[i] = lChar;
-        break;
+        return lChar;
       case 'M':
       case 'm':
-        characterData[i] = mChar;
-        break;
+        return mChar;
       case 'N':
       case 'n':
-        characterData[i] = nChar;
-        break;
+        return nChar;
       case 'O':
       case 'o':
-        characterData[i] = oChar;
-        break;
+        return oChar;
       case 'P':
       case 'p':
-        characterData[i] = pChar;
-        break;
+        return pChar;
       case 'Q':
       case 'q':
-        characterData[i] = qChar;
-        break;
+        return qChar;
       case 'R':
       case 'r':
-        characterData[i] = rChar;
-        break;
+        return rChar;
       case 'S':
       case 's':
-        characterData[i] = sChar;
-        break;
+        return sChar;
       case 'T':
       case 't':
-        characterData[i] = tChar;
-        break;
+        return tChar;
       case 'U':
       case 'u':
-        characterData[i] = uChar;
-        break;
+        return uChar;
       case 'V':
       case 'v':
-        characterData[i] = vChar;
-        break;
+        return vChar;
       case 'W':
       case 'w':
-        characterData[i] = wChar;
-        break;
+        return wChar;
       case 'X':
       case 'x':
-        characterData[i] = xChar;
-        break;
+        return xChar;
       case 'Y':
       case 'y':
-        characterData[i] = yChar;
-        break;
+        return yChar;
       case 'Z':
       case 'z':
-        characterData[i] = zChar;
-        break;
+        return zChar;
       case '0':
-        characterData[i] = zeroChar;
-        break;
+        return zeroChar;
       case '1':
-        characterData[i] = oneChar;
-        break;
+        return oneChar;
       case '2':
-        characterData[i] = twoChar;
-        break;
+        return twoChar;
       case '3':
-        characterData[i] = threeChar;
-        break;
+        return threeChar;
       case '4':
-        characterData[i] = fourChar;
-        break;
+        return fourChar;
       case '5':
-        characterData[i] = fiveChar;
-        break;
+        return fiveChar;
       case '6':
-        characterData[i] = sixChar;
-        break;
+        return sixChar;
       case '7':
-        characterData[i] = sevenChar;
-        break;
+        return sevenChar;
       case '8':
-        characterData[i] = eightChar;
-        break;
+        return eightChar;
       case '9':
-        characterData[i] = nineChar;
-        break;
+        return nineChar;
       case ',':
       case '.':
-        characterData[i] = commaChar;
-        break;
+        return commaChar;
       case '-':
-        characterData[i] = dashChar;
-        break;
+        return dashChar;
       case '_':
-        characterData[i] = uscorChar;
-        break;
+        return uscorChar;
       case '(':
       case '<':
-        characterData[i] = oparnChar;
-        break;
+        return oparnChar;
       case ')':
       case '>':
-        characterData[i] = cparnChar;
-        break;
+        return cparnChar;
       case '#':
-        characterData[i] = hashChar;
-        break;
+        return hashChar;
       case '$':
-        characterData[i] = dolarChar;
-        break;
+        return dolarChar;
       case '%':
-        characterData[i] = prcntChar;
-        break;
+        return prcntChar;
       case '*':
-        characterData[i] = starChar;
-        break;
+        return starChar;
       case '+':
-        characterData[i] = plusChar;
-        break;
+        return plusChar;
       case '?':
-        characterData[i] = questChar;
-        break;
+        return questChar;
       case '"':
-        characterData[i] = quoteChar;
-        break;
+        return quoteChar;
       case '/':
-        characterData[i] = slashChar;
-        break;
+        return slashChar;
       case '=':
-        characterData[i] = equalChar;
-        break;
+        return equalChar;
       default:
-          characterData[i] = 0;
-        break;
+        return 0;
     }
-  }
 }

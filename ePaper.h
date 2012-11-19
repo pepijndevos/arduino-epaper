@@ -41,10 +41,13 @@ class ePaper
   	int _EN;
 	int _VCC;
   	
-
-  	
-  	
-  
 };
+
+typedef struct Changes {
+	uint16_t add[10];
+	uint16_t addNeg[10];
+	uint16_t del[10];
+	uint16_t delNeg[10];
+} Changes;
 
 #endif //Shifter_h
