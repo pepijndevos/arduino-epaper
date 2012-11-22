@@ -398,7 +398,7 @@ void ePaper::incrementalData(char *top, char *bottom) {
   }
 }
 
-void ePaper::writeSimple(int bw) {
+void ePaper::writeSimple(int up, int bw) {
 // a simple update that fades sooner than the 7-5-7 but looks better
 
   wakeup();
@@ -406,17 +406,17 @@ void ePaper::writeSimple(int bw) {
   // added = 1
   // deleted = 0
   // unchanged = 1
-  printAll(_topChanges->delNeg, _bottomChanges->delNeg, 1, 1);
+  printAll(_topChanges->delNeg, _bottomChanges->delNeg, up ? !bw : 1, 1);
   delay(1400);
   // added = 1
   // deleted = 1
   // unchanged = 0
-  printAll(_topChanges->addDel, _bottomChanges->addDel, 0, 0);
+  printAll(_topChanges->addDel, _bottomChanges->addDel, up ? 1 : 0, 0);
   delay(1400);
   // added = 0
   // deleted = 1
   // unchanged = 1
-  printAll(_topChanges->addNeg, _bottomChanges->addNeg, 1, 1);
+  printAll(_topChanges->addNeg, _bottomChanges->addNeg, up ? bw : 1, 1);
   delay(1400);
   zeroOut();
 
@@ -424,46 +424,79 @@ void ePaper::writeSimple(int bw) {
 }
 
 
-/*void ePaper::write757(int bw) {
+void ePaper::write757(int up, int bw) {
 // write a 7-5-7 waveform to the display
 // this is ugly and takes longer, but doesn't fade away as quickly
   
-  printAll(top, bottom, bw, 1);
+  wakeup();
+
+  // added = 1
+  // deleted = 0
+  // unchanged = 1
+  printAll(_topChanges->delNeg, _bottomChanges->delNeg, up ? !bw : 1, 1);
   delay(250);
-  printAll(top, bottom, bw, 0);
+  // added = 1
+  // deleted = 0
+  // unchanged = 0
+  printAll(_topChanges->add, _bottomChanges->add, up ? !bw : 0, 0);
   delay(250);
 
   int x;
   for(x=0; x<7; x++) {
     delay(100);
-    printAll(top, bottom, bw, 0);
+    // added = 1
+    // deleted = 0
+    // unchanged = 0
+    printAll(_topChanges->add, _bottomChanges->add, up ? !bw : 0, 0);
     delay(100);
-    printAll(top, bottom, bw, 1);
+    // added = 1
+    // deleted = 0
+    // unchanged = 1
+    printAll(_topChanges->delNeg, _bottomChanges->delNeg, up ? !bw : 1, 1);
 
   }
 
   for(x=0; x<5; x++) {
     delay(200);
-    printAll(inverseTop, inverseBottom, !bw, 0);
+    // added = 1
+    // deleted = 1
+    // unchanged = 0
+    printAll(_topChanges->addDel, _bottomChanges->addDel, up ? 1 : 0, 0);
     delay(200);
-    printAll(top, bottom, bw, 1);
+    // added = 0
+    // deleted = 0
+    // unchanged = 1
+    printAll(_topChanges->addDelNeg, _bottomChanges->addDelNeg, up ? 0 : 1, 1);
   }
 
-  printAll(inverseTop, inverseBottom, !bw, 0);
+  // added = 0
+  // deleted = 1
+  // unchanged = 0
+  printAll(_topChanges->del, _bottomChanges->del, up ? bw : 0, 0);
   delay(250);
-  printAll(inverseTop, inverseBottom, !bw, 1);
+  // added = 0
+  // deleted = 1
+  // unchanged = 1
+  printAll(_topChanges->addNeg, _bottomChanges->addNeg, up ? bw : 1, 1);
   delay(250);
 
   for(x=0; x<7; x++) {
     delay(100);
-    printAll(inverseTop, inverseBottom, !bw, 0);
+    // added = 0
+    // deleted = 1
+    // unchanged = 0
+    printAll(_topChanges->del, _bottomChanges->del, up ? bw : 0, 0);
     delay(100);
-    printAll(inverseTop, inverseBottom, !bw, 1);
+    // added = 0
+    // deleted = 1
+    // unchanged = 1
+    printAll(_topChanges->addNeg, _bottomChanges->addNeg, up ? bw : 1, 1);
   }
 
   zeroOut();
 
-}*/
+  shutdown();
+}
 
 
 

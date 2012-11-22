@@ -24,8 +24,8 @@ class ePaper
    	
 	void completeData(char*, char*);
 	void incrementalData(char*, char*);
-	void writeSimple(int);
-	void write757(int);
+	void writeSimple(int, int);
+	void write757(int, int);
 	
 
 
