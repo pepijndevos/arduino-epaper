@@ -15,11 +15,10 @@ ePaper	KEYWORD1
 #######################################
 
 
-writeDisplay	KEYWORD2
-writeBottom	KEYWORD2
-writeTop	KEYWORD2
-writeNumberBottom	KEYWORD2
-writeNumberTop	KEYWORD2
+writeSimple	KEYWORD2
+write757	KEYWORD2
+completeData	KEYWORD2
+incrementalData	KEYWORD2
 
 
 #######################################
